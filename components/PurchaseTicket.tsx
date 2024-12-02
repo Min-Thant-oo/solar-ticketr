@@ -93,11 +93,16 @@ const PurchaseTicket = ({ eventId }: { eventId: Id<'events'> }) => {
                 </button>
 
                 <div className="mt-4">
-                    <ReleaseTicket eventId={eventId} waitingListId={queuePosition._id} />
+                    {queuePosition && (
+                        <ReleaseTicket 
+                            eventId={eventId} 
+                            waitingListId={queuePosition._id} 
+                        />
+                    )}
                 </div>
             </div>
         </div>
-    )
+    ) 
 }
 
 export default PurchaseTicket
