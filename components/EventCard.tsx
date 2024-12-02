@@ -9,6 +9,7 @@ import { CalendarDays, Check, CircleArrowRight, LoaderCircle, MapPin, PencilIcon
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React from 'react'
+import PurchaseTicket from './PurchaseTicket';
 
 const EventCard = ({ eventId }: {eventId: Id<'events'>}) => {
   const { user } = useUser();
