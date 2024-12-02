@@ -15,8 +15,10 @@ import type {
 } from "convex/server";
 import type * as constant from "../constant.js";
 import type * as events from "../events.js";
+import type * as storage from "../storage.js";
+import type * as tickets from "../tickets.js";
 import type * as users from "../users.js";
-import type * as tickets from '../tickets.js'
+import type * as waitingList from "../waitingList.js";
 
 /**
  * A utility for referencing Convex functions in your app's API.
@@ -29,8 +31,10 @@ import type * as tickets from '../tickets.js'
 declare const fullApi: ApiFromModules<{
   constant: typeof constant;
   events: typeof events;
-  users: typeof users;
+  storage: typeof storage;
   tickets: typeof tickets;
+  users: typeof users;
+  waitingList: typeof waitingList;
 }>;
 export declare const api: FilterApi<
   typeof fullApi,
