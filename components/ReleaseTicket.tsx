@@ -2,6 +2,7 @@
 
 import { api } from '@/convex/_generated/api';
 import { Id } from '@/convex/_generated/dataModel';
+import { useToast } from '@/hooks/use-toast';
 import { useMutation } from 'convex/react';
 import { XCircle } from 'lucide-react';
 import React, { useState } from 'react'
@@ -15,6 +16,7 @@ const ReleaseTicket = ({
 }) => {
     const [isReleasing, setIsReleasing] = useState(false)
     const releaseTicket = useMutation(api.waitingList.releaseTicket)
+    const { toast } = useToast();
 
     const handleRelease = async () => {
         if(!confirm('Are you sure you want to release your ticket offer?')) return;
@@ -26,6 +28,10 @@ const ReleaseTicket = ({
             console.error('Error releasing ticket', error);
         } finally {
             setIsReleasing(false);
+            toast({
+                title: 'Ticket released!',
+                duration: 5000,
+            });
         }
     };
 
