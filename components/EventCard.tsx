@@ -198,44 +198,44 @@ const EventCard = ({ eventId }: {eventId: Id<'events'>}) => {
             </span>
           )}
         </div>
+      </div>
 
-        {/* Event Details */}
-        <div className="mt-4 space-y-3">
-          <div className="flex items-center text-gray-600">
-            <MapPin className='w-4 h-4 mr-2' />
-            <span>{event.location}</span>
-          </div>
-
-          <div className="flex items-center text-gray-600">
-            <CalendarDays className='w-4 h-4 mr-2' />
-            <span>
-              {new Date(event.eventDate).toLocaleDateString()}{' '}
-              {isPastEvent && '(Ended)'}
-            </span>
-          </div>
-
-          <div className="flex items-center text-gray-600">
-            <Ticket className='w-4 h-4 mr-2' />
-            <span>
-              {availability.totalTickets - availability.purchasedCount} /{' '}
-              {availability.totalTickets} available
-              {!isPastEvent && availability.activeOffers > 0 && (
-                <span className="text-amber-600 text-sm ml-2">
-                  ({availability.activeOffers}{' '}
-                  {availability.activeOffers === 1 ? 'person' : 'people'} trying to buy)
-                </span>
-              )}
-            </span>
-          </div>
+      {/* Event Details */}
+      <div className="mt-4 space-y-3">
+        <div className="flex items-center text-gray-600">
+          <MapPin className='w-4 h-4 mr-2' />
+          <span>{event.location}</span>
         </div>
 
-        <p className="mt-4 text-gray-600 text-sm line-clamp-2">
-          {event.description}
-        </p>
-
-        <div onClick={(e) => e.stopPropagation()}>
-              {!isPastEvent && renderTicketStatus()}
+        <div className="flex items-center text-gray-600">
+          <CalendarDays className='w-4 h-4 mr-2' />
+          <span>
+            {new Date(event.eventDate).toLocaleDateString()}{' '}
+            {isPastEvent && '(Ended)'}
+          </span>
         </div>
+
+        <div className="flex items-center text-gray-600">
+          <Ticket className='w-4 h-4 mr-2' />
+          <span>
+            {availability.totalTickets - availability.purchasedCount} /{' '}
+            {availability.totalTickets} available
+            {!isPastEvent && availability.activeOffers > 0 && (
+              <span className="text-amber-600 text-sm ml-2">
+                ({availability.activeOffers}{' '}
+                {availability.activeOffers === 1 ? 'person' : 'people'} trying to buy)
+              </span>
+            )}
+          </span>
+        </div>
+      </div>
+
+      <p className="mt-4 text-gray-600 text-sm line-clamp-2">
+        {event.description}
+      </p>
+
+      <div onClick={(e) => e.stopPropagation()}>
+            {!isPastEvent && renderTicketStatus()}
       </div>
     </div>
   )
