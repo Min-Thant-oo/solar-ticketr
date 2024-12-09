@@ -1,3 +1,4 @@
+import SellerDashboard from '@/components/SellerDashboard';
 import { auth } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
 import React from 'react'
@@ -12,4 +13,4 @@ import React from 'react'
     )
 }
 
-export default page
+export default SellerPage
