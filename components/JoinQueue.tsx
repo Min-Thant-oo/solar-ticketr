@@ -79,7 +79,7 @@ const JoinQueue = ({
                     {isEventOwner ? (
                         <div className="flex items-center justify-center gap-2 w-full py-3 px-4 bg-gray-100 text-gray-700 rounded-lg">
                             <OctagonXIcon className='w-5 h-5' />
-                            <span>You cannot buy a ticet for your own event</span>
+                            <span>You cannot buy a ticket for your own event</span>
                         </div>
                     ) : (
                         isPastEvent ? (
