@@ -3,6 +3,7 @@ import { ConvexError, v } from 'convex/values';
 import { DURATIONS, TICKET_STATUS, WAITING_LIST_STATUS } from './constant';
 import { internal } from './_generated/api';
 import { processQueue } from './waitingList';
+import { MINUTE, RateLimiter } from "@convex-dev/rate-limiter";
 
 export type Metrics = {
   soldTickets: number;
@@ -10,6 +11,15 @@ export type Metrics = {
   cancelledTickets: number;
   revenue: number;
 };
+
+// Initialize rate limiter
+// const rateLimiter = new RateLimiter(components.rateLimiter, {
+//   queueJoin: {
+//     kind: "fixed window",
+//     rate: 3, // 3 joins allowed
+//     period: 30 * MINUTE, // in 30 minutes
+//   },
+// });
 
 export const create = mutation({
     args: {
@@ -163,10 +173,10 @@ export const joinWaitingList = mutation({
     // Function takes an event ID and user ID as arguments
     args: { eventId: v.id('events'), userId: v.string() },
     handler: async (ctx, { eventId, userId }) => {
-        // // Rate limit check
+        // Rate limit check
         // const status = await rateLimiter.limit(ctx, 'queueJoin', { key: userId });
         // if(!status.ok) {
-        //     throw new ConvexeError(
+        //     throw new ConvexError(
         //         `You've joined the waiting list too many times. Please wait ${Math.ceil(
         //             status.retryAfter / (60 * 1000)
         //         )} minutes before trying again.`
@@ -406,5 +416,45 @@ export const getSellerEvents = query({
     );
 
     return eventsWithMetrics;
+  },
+});
+
+export const cancelEvent = mutation({
+  args: { eventId: v.id("events") },
+  handler: async (ctx, { eventId }) => {
+    const event = await ctx.db.get(eventId);
+    if (!event) throw new Error("Event not found");
+
+    // Get all valid tickets for this event
+    const tickets = await ctx.db
+      .query("tickets")
+      .withIndex("by_event", (q) => q.eq("eventId", eventId))
+      .filter((q) =>
+        q.or(q.eq(q.field("status"), "valid"), q.eq(q.field("status"), "used"))
+      )
+      .collect();
+
+    if (tickets.length > 0) {
+      throw new Error(
+        "Cannot cancel event with active tickets. Please refund all tickets first."
+      );
+    }
+
+    // Mark event as cancelled
+    await ctx.db.patch(eventId, {
+      is_cancelled: true,
+    });
+
+    // Delete any waiting list entries
+    const waitingListEntries = await ctx.db
+      .query("waitingList")
+      .withIndex("by_event_status", (q) => q.eq("eventId", eventId))
+      .collect();
+
+    for (const entry of waitingListEntries) {
+      await ctx.db.delete(entry._id);
+    }
+
+    return { success: true };
   },
 });

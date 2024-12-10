@@ -61,7 +61,7 @@ export default function SellerEventCard({
                         <Edit className="w-4 h-4" />
                         Edit
                       </Link>
-                      <CancelEventButton  />
+                      <CancelEventButton eventId={event._id} />
                     </>
                   )}
                 </div>
@@ -103,7 +103,7 @@ export default function SellerEventCard({
                     </span>
                   </div>
                   <p className="text-2xl font-semibold text-gray-900">
-                    £
+                    $
                     {event.is_cancelled
                       ? event.metrics.refundedTickets * event.price
                       : event.metrics.revenue}
