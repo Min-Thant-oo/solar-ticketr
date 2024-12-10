@@ -9,27 +9,39 @@ import Link from "next/link";
 import { ArrowLeft, Download, Share2 } from "lucide-react";
 import { useEffect } from "react";
 import Ticket from "@/components/Ticket";
+import Spinner from "@/components/Spinner";
 
 export default function TicketPage() {
   const params = useParams();
-  const { user } = useUser();
+  const { user, isLoaded } = useUser();
   const ticket = useQuery(api.tickets.getTicketWithDetails, {
     ticketId: params.id as Id<"tickets">,
   });
 
+  const isTicketLoaded = ticket !== undefined;
+
   useEffect(() => {
-    if (!user) {
+    if (isLoaded && !user) {
       redirect("/");
     }
 
-    if (!ticket || ticket.userId !== user.id) {
+    if (isLoaded && isTicketLoaded && ( ticket?.userId !== user?.id)) {
       redirect("/tickets");
     }
 
-    if (!ticket.event) {
+    if (isTicketLoaded && !ticket?.event) {
       redirect("/tickets");
     }
-  }, [user, ticket]);
+  }, [isLoaded, user, ticket, isTicketLoaded]);
+
+  // Show spinner while Clerk is loading
+  if (!isLoaded && !isTicketLoaded) {
+    return (
+        <div className="min-h-screen flex items-center justify-center">
+            <Spinner />
+        </div>
+    );
+  }
 
   if (!ticket || !ticket.event) {
     return null;
