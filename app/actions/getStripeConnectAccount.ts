@@ -2,7 +2,6 @@
 
 import { ConvexHttpClient } from "convex/browser";
 import { auth } from '@clerk/nextjs/server';
-import { getUsersStripeConnectId } from '../../convex/users';
 import { api } from "@/convex/_generated/api";
 
 if(!process.env.NEXT_PUBLIC_CONVEX_URL) {
