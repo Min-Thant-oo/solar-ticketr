@@ -189,7 +189,7 @@ export const joinWaitingList = mutation({
         const existingEntry = await ctx.db
             .query('waitingList')
             .withIndex('by_user_event', (q) => q.eq('userId', userId).eq('eventId', eventId))
-            .filter((q) => q.eq(q.field('status'), WAITING_LIST_STATUS.EXPIRED))
+            .filter((q) => q.neq(q.field('status'), WAITING_LIST_STATUS.EXPIRED))
             .first();
 
         // Don't allow duplicate entries
