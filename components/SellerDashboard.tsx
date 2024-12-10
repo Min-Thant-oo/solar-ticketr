@@ -97,6 +97,13 @@ export default function SellerDashboard() {
                     <CalendarDays className="w-5 h-5" />
                     View My Events
                   </Link>
+                  <button
+                    onClick={handleManageAccount}
+                    className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center"
+                  >
+                    <Cog className="w-4 h-4 mr-2" />
+                    Seller Dashboard
+                  </button>
                 </div>
               </div>
             </div>
@@ -280,7 +287,7 @@ export default function SellerDashboard() {
 
               {/* Action Buttons */}
               <div className="flex flex-wrap gap-3 mt-6">
-                {accountStatus.isActive && (
+                {/* {accountStatus.isActive && (
                   <button
                     onClick={handleManageAccount}
                     className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center"
@@ -288,7 +295,7 @@ export default function SellerDashboard() {
                     <Cog className="w-4 h-4 mr-2" />
                     Seller Dashboard
                   </button>
-                )}
+                )} */}
                 <button
                   onClick={fetchAccountStatus}
                   className="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors"
