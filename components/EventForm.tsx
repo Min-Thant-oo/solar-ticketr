@@ -283,7 +283,7 @@ export default function EventForm({ mode, initialData }: EventFormProps) {
                     </span>
                     <Input
                       type="number"
-                      {...field}
+                      // {...field}
                       onChange={(e) => field.onChange(Number(e.target.value))}
                       className="pl-6"
                     />
