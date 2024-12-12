@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { api } from '@/convex/_generated/api';
 import { Id } from '@/convex/_generated/dataModel';
 import { useStorageUrl } from '@/lib/utils';
-import { SignInButton, useUser } from '@clerk/nextjs';
+import { SignedOut, SignInButton, useUser } from '@clerk/nextjs';
 import { useQuery } from 'convex/react';
 import { CalendarDays, MapPin, Ticket, Users } from 'lucide-react';
 import Image from 'next/image';
@@ -128,11 +128,13 @@ const EventPage = () => {
                                             userId={user.id}
                                         />
                                     ) : (
-                                        <SignInButton>
-                                            <Button className='w-full bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white font-medium py-2 px-4 rounded-lg transition-all duratin-200 shadow-md hover:shadow-lg'>
-                                                Sign in to buy tickets
-                                            </Button>
-                                        </SignInButton>
+                                        <SignedOut>
+                                            <SignInButton mode='modal'>
+                                                <button className='w-full bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white font-medium py-2 px-4 rounded-lg transition-all duratin-200 shadow-md hover:shadow-lg'>
+                                                    Sign in to buy tickets
+                                                </button>
+                                            </SignInButton>
+                                        </SignedOut>
                                     )}
                                 </div>
                             </div>
