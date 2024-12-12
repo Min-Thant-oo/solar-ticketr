@@ -130,9 +130,9 @@ const EventPage = () => {
                                     ) : (
                                         <SignedOut>
                                             <SignInButton mode='modal'>
-                                                <button className='w-full bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white font-medium py-2 px-4 rounded-lg transition-all duratin-200 shadow-md hover:shadow-lg'>
+                                                <Button className='w-full bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white font-medium py-2 px-4 rounded-lg transition-all duratin-200 shadow-md hover:shadow-lg'>
                                                     Sign in to buy tickets
-                                                </button>
+                                                </Button>
                                             </SignInButton>
                                         </SignedOut>
                                     )}
