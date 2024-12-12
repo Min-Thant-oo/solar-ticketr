@@ -202,6 +202,7 @@ export const joinWaitingList = mutation({
         if(!event) throw new Error('Event not found');
 
         // Check if there are any available tickets right now for this event
+        // use {} to destructure it since checkAvailability return object{}
         const { available } = await checkAvailability(ctx, { eventId });
 
         const now = Date.now();
