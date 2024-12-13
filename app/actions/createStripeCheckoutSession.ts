@@ -28,6 +28,11 @@ export async function createStripeCheckoutSession({
   const event = await convex.query(api.events.getById, { eventId });
   if (!event) throw new Error("Event not found");
 
+  // Get event Image URL using the storage ID
+    const imageUrl = event.imageStorageId
+    ? await convex.query(api.storage.getUrl, { storageId: event.imageStorageId })
+    : null;
+
   // Get waiting list entry
   const queuePosition = await convex.query(api.waitingList.getQueuePosition, {
     eventId,
@@ -71,6 +76,7 @@ export async function createStripeCheckoutSession({
             product_data: {
               name: event.name,
               description: event.description,
+              images: imageUrl ? [imageUrl] : [],
             },
             unit_amount: Math.round(event.price * 100),  // since the amount is in cents
           },
